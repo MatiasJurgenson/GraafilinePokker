@@ -1,9 +1,13 @@
 package com.example.graafilinepokker;
 
 import javafx.application.Application;
+import javafx.geometry.Pos;
 import javafx.scene.Group;
 import javafx.scene.Scene;
+import javafx.scene.control.Button;
+import javafx.scene.control.Label;
 import javafx.scene.control.TextField;
+import javafx.scene.layout.VBox;
 import javafx.scene.paint.Color;
 import javafx.scene.shape.Circle;
 import javafx.scene.shape.Rectangle;
@@ -16,27 +20,33 @@ public class Main extends Application {
 
     @Override
     public void start(Stage pealava) {
-        Group juur = new Group();
-        Scene stseen = new Scene(juur, 500, 300, Color.SNOW);
-        pealava.setScene(stseen);
 
-        Circle ring = new Circle(250, 150, 100, Color.RED);
-        juur.getChildren().add(ring);
+        //varastatud siit: https://coderslegacy.com/java/switch-between-scenes-in-javafx/
+        VBox layout = new VBox();
+        VBox layout2 = new VBox();
+        layout.setAlignment(Pos.CENTER);
+        layout2.setAlignment(Pos.CENTER);
 
+        Scene scene = new Scene(layout, 300, 300);
+        Scene scene2 = new Scene(layout2, 300, 300);
 
-        ring.setOnMouseEntered(event -> ring.setFill(Color.YELLOW));
-        ring.setOnMouseExited(event -> ring.setFill(Color.GREEN));
+        Label label1 = new Label("This is the First Scene");
+        Label label2 = new Label("This is the Second Scene");
 
-        Rectangle kaardiSisu = new Rectangle(200,0, 100, 200);
-        kaardiSisu.setFill(Color.SNOW);
-        juur.getChildren().add(kaardiSisu);
+        Button button = new Button("Forward");
+        button.setOnAction(e -> pealava.setScene(scene2));
 
-        Text kaardiMärk = new Text(250,150, "K♥");
-        //♣ ♦ ♠ ♥
+        Button button2 = new Button("Backwards");
+        button2.setOnAction(e -> pealava.setScene(scene));
 
-        juur.getChildren().add(kaardiMärk);
+        TextField text = new TextField();
+        text.setMaxWidth(100);
 
+        layout.getChildren().addAll(label1, button);
+        layout2.getChildren().addAll(label2, button2, text);
 
+        pealava.setTitle("CodersLegacy");
+        pealava.setScene(scene);
         pealava.show();
     }
 
