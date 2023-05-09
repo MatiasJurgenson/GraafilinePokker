@@ -79,10 +79,149 @@ public class Main extends Application {
         pealava.setResizable(false);
 
         scene.setOnMousePressed(event -> {
-            System.out.println("Mouse Pressed at (" + event.getX() + ", " + event.getY() + ")");
             if (event.getX() >= 350 && event.getY() > 175 && event.getX() <= 650 && event.getY() <= 250) {
-                System.out.println("Mängi");
                 // siit edasi läheb mänguekraan ja loogika
+                root.getChildren().removeAll(pealkiri,backRuut,backRuut2,backRuut3,alusta, quit, juhised);
+                Rectangle lauaRing = new Rectangle(600,300);
+                lauaRing.setArcWidth(300);
+                lauaRing.setArcHeight(300);
+                lauaRing.setX(200);
+                lauaRing.setY(140);
+                lauaRing.setFill(Color.WHITESMOKE);
+                Rectangle lauaRing2 = new Rectangle(575,275);
+                lauaRing2.setArcWidth(285);
+                lauaRing2.setArcHeight(285);
+                lauaRing2.setX(212.5);
+                lauaRing2.setY(152.5);
+                lauaRing2.setFill(Color.ROSYBROWN);
+
+                //esimene mängija
+                KaardiKujutis kaart1 = new KaardiKujutis();
+                kaart1.setPaiknevus(100,100);
+                KaardiKujutis kaart2 = new KaardiKujutis();
+                kaart2.setPaiknevus(120,75);
+
+                //teine mängija
+                KaardiKujutis kaart3 = new KaardiKujutis();
+                kaart3.setPaiknevus(820,100);
+                KaardiKujutis kaart4 = new KaardiKujutis();
+                kaart4.setPaiknevus(800,75);
+
+                //kolmas mängija
+                KaardiKujutis kaart5 = new KaardiKujutis();
+                kaart5.setPaiknevus(820,375);
+                KaardiKujutis kaart6 = new KaardiKujutis();
+                kaart6.setPaiknevus(800,400);
+
+                //neljas mängija
+                KaardiKujutis kaart7 = new KaardiKujutis();
+                kaart7.setPaiknevus(100,375);
+                KaardiKujutis kaart8 = new KaardiKujutis();
+                kaart8.setPaiknevus(120,400);
+
+                //inimese kaardid
+                KaardiKujutis kaart9 = new KaardiKujutis();
+                kaart9.setPaiknevus(420,450);
+                KaardiKujutis kaart10 = new KaardiKujutis();
+                kaart10.setPaiknevus(505,450);
+
+
+                //rahakastid
+
+                RahaKast mängijaRaha = new RahaKast();
+                mängijaRaha.setPaiknevus(435,350);
+                mängijaRaha.rahaRingTaust.setFill(Color.DARKCYAN);
+                RahaKast arvutiRaha1 = new RahaKast();
+                arvutiRaha1.setPaiknevus(235,65);
+
+                RahaKast arvutiRaha2 = new RahaKast();
+                arvutiRaha2.setPaiknevus(635,65);
+
+                RahaKast arvutiRaha3 = new RahaKast();
+                arvutiRaha3.setPaiknevus(235,455);
+
+                RahaKast arvutiRaha4 = new RahaKast();
+                arvutiRaha4.setPaiknevus(635,455);
+
+                RahaKast paljuMängusOn = new RahaKast();
+                paljuMängusOn.setPaiknevus(435,275);
+                paljuMängusOn.rahaRingTaust.setFill(Color.IVORY);
+
+                //call bet fold
+                Label call = new Label("Call");
+                call.setFont(new Font("Comic Sans MS",30));
+                Rectangle callBack = new Rectangle(100,50);
+                callBack.setFill(Color.BLANCHEDALMOND);
+                call.setLayoutX(425);
+                call.setLayoutY(75);
+                callBack.setLayoutX(400);
+                callBack.setLayoutY(72);
+                callBack.setArcWidth(50);
+                callBack.setArcHeight(50);
+
+                Label bet = new Label("Bet");
+                bet.setFont(new Font("Comic Sans MS",30));
+                Rectangle betBack = new Rectangle(100,50);
+                betBack.setFill(Color.BLANCHEDALMOND);
+                bet.setLayoutX(530);
+                bet.setLayoutY(75);
+                betBack.setLayoutX(505);
+                betBack.setLayoutY(72);
+                betBack.setArcWidth(50);
+                betBack.setArcHeight(50);
+
+                Label fold = new Label("Fold");
+                fold.setFont(new Font("Comic Sans MS",30));
+                Rectangle foldBack = new Rectangle(100,50);
+                foldBack.setFill(Color.BLANCHEDALMOND);
+                fold.setLayoutX(470);
+                fold.setLayoutY(20);
+                foldBack.setLayoutX(450);
+                foldBack.setLayoutY(18);
+                foldBack.setArcWidth(50);
+                foldBack.setArcHeight(50);
+
+                //giga objektide kogum
+                root.getChildren().addAll(lauaRing, lauaRing2, kaart1.kaardiTaust, kaart1.kaardiSisemus, kaart2.kaardiTaust, kaart2.kaardiSisemus,
+                        kaart3.kaardiTaust, kaart3.kaardiSisemus, kaart4.kaardiTaust, kaart4.kaardiSisemus, kaart5.kaardiTaust, kaart5.kaardiSisemus,
+                        kaart6.kaardiTaust, kaart6.kaardiSisemus, kaart7.kaardiTaust, kaart7.kaardiSisemus, kaart8.kaardiTaust, kaart8.kaardiSisemus,
+                        kaart9.kaardiTaust, kaart9.kaardiSisemus, kaart10.kaardiTaust, kaart10.kaardiSisemus, kaart9.tekst, kaart10.tekst,
+                        kaart7.tekst, kaart6.tekst, kaart5.tekst, kaart4.tekst, kaart3.tekst, kaart2.tekst, kaart1.tekst,
+                        mängijaRaha.rahaRingKast, mängijaRaha.rahaRingTaust, mängijaRaha.rahaRingKesk, mängijaRaha.raha, mängijaRaha.paljuRahaOn,
+                        arvutiRaha1.rahaRingKast, arvutiRaha1.rahaRingTaust, arvutiRaha1.rahaRingKesk, arvutiRaha1.raha, arvutiRaha1.paljuRahaOn,
+                        arvutiRaha2.rahaRingKast, arvutiRaha2.rahaRingTaust, arvutiRaha2.rahaRingKesk, arvutiRaha2.raha, arvutiRaha2.paljuRahaOn,
+                        arvutiRaha3.rahaRingKast, arvutiRaha3.rahaRingTaust, arvutiRaha3.rahaRingKesk, arvutiRaha3.raha, arvutiRaha3.paljuRahaOn,
+                        arvutiRaha4.rahaRingKast, arvutiRaha4.rahaRingTaust, arvutiRaha4.rahaRingKesk, arvutiRaha4.raha, arvutiRaha4.paljuRahaOn,
+                        paljuMängusOn.rahaRingKast, paljuMängusOn.rahaRingTaust, paljuMängusOn.rahaRingKesk, paljuMängusOn.raha, paljuMängusOn.paljuRahaOn,
+                        callBack, call,foldBack, fold, betBack, bet);
+
+                Kaardipakk kaardipakk = new Kaardipakk();
+                kaardipakk.genereeriTavaPakk();
+                Diiler diiler = new Diiler(kaardipakk);
+                diiler.alustaRaundi(5);
+
+                //panen mängija kaardid ümberpööratud asendisse.
+                //teised keerab kui raund on läbi, keegi paneb foldi.
+                String mängijaKaardid = diiler.getMängijaKäsi();
+                System.out.println(mängijaKaardid);
+                String[] esimene = mängijaKaardid.split(" ");
+                System.out.println(Arrays.toString(esimene));
+                kaart9.pööraÜmber(esimene[0].substring(0,1).toUpperCase()+" "+esimene[1].substring(0,1).toUpperCase());
+                kaart10.pööraÜmber(esimene[2].substring(0,1).toUpperCase()+" "+esimene[3].substring(0,1).toUpperCase());
+
+                //lisan kõigi rahad.
+                List<Integer> mängijateRahad = diiler.getRaha();
+                System.out.println(mängijateRahad);
+                //mängijaraha
+                mängijaRaha.setRaha(mängijateRahad.get(0));
+                //1. arvuti raha
+                arvutiRaha1.setRaha(mängijateRahad.get(1));
+                //2. arvuti raha
+                arvutiRaha2.setRaha(mängijateRahad.get(2));
+                //3. arvuti raha
+                arvutiRaha3.setRaha(mängijateRahad.get(3));
+                //4. arvuti raha
+                arvutiRaha4.setRaha(mängijateRahad.get(4));
 
             } else if (event.getX() >= 350 && event.getY() > 270 && event.getX() <= 650 && event.getY() <= 345) {
                 System.out.println("Juhised");

@@ -3,11 +3,11 @@ package com.example.graafilinepokker;
 import java.util.*;
 
 public class Diiler {
-    private List<Kaart[]> kätes = new ArrayList<>();
-    private List<Integer> raha = new ArrayList<>();
-    private Kaardipakk kaardipakk;
-    private List<Kaart> laual = new ArrayList<>();
-    private int laualRaha;
+    public List<Kaart[]> kätes = new ArrayList<>();
+    public List<Integer> raha = new ArrayList<>();
+    public Kaardipakk kaardipakk;
+    public List<Kaart> laual = new ArrayList<>();
+    public int laualRaha;
 
     private boolean[] mängus;
 
@@ -45,7 +45,7 @@ public class Diiler {
             this.mängus[i] = true;
         }
         //tagastab listi kõigi mängijatega.
-        return kätes;
+        return this.kätes;
     }
 
     public void resetAll() {
@@ -73,16 +73,16 @@ public class Diiler {
 
     public List<Kaart> getLaual() {
         //tagastab laual olevad kaardid
-        return laual;
+        return this.laual;
     }
 
-    public void getMängijaKäsi() {
-        System.out.print(this.kätes.get(0)[0] + ", " + this.kätes.get(0)[1] + "\n");
+    public String getMängijaKäsi() {
+        return this.kätes.get(0)[0] +" "+ this.kätes.get(0)[1];
     }
 
     public List<Integer> getRaha() {
         //tagastab mängijate raha.
-        return raha;
+        return this.raha;
     }
 
     public int getLaualRaha() {
