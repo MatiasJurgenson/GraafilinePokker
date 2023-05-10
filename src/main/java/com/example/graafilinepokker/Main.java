@@ -223,11 +223,52 @@ public class Main extends Application {
                 //4. arvuti raha
                 arvutiRaha4.setRaha(mängijateRahad.get(4));
 
+                // lisada lauale 5 kaarti
+
+                //while true
+                //todo kui fold siis viib mängu lõpuni
+                //todo call kui mingi npc otsusutab panust suurendada
+                //todo bet suurendab betti
+
+                //todo peale esimest betti lisada lauda 5 kaarti 3 ümberpööratult
+
+                diiler.lisaLauale(5);
+
+                //laua kaardid
+                KaardiKujutis lauaKaart1 = new KaardiKujutis();
+            lauaKaart1.setPaiknevus(295,166);
+                KaardiKujutis lauaKaart2 = new KaardiKujutis();
+            lauaKaart2.setPaiknevus(380,166);
+                KaardiKujutis lauaKaart3 = new KaardiKujutis();
+            lauaKaart3.setPaiknevus(465,166);
+                KaardiKujutis lauaKaart4 = new KaardiKujutis();
+            lauaKaart4.setPaiknevus(550,166);
+                KaardiKujutis lauaKaart5 = new KaardiKujutis();
+            lauaKaart5.setPaiknevus(635,166);
+
+            root.getChildren().addAll(lauaKaart1.kaardiTaust,lauaKaart1.kaardiSisemus,lauaKaart2.kaardiTaust,lauaKaart2.kaardiSisemus,
+                    lauaKaart3.kaardiTaust,lauaKaart3.kaardiSisemus,lauaKaart4.kaardiTaust,lauaKaart4.kaardiSisemus, lauaKaart5.kaardiTaust,
+                    lauaKaart5.kaardiSisemus);
+
+            List<Kaart> laual = diiler.getLaual();
+
+            //todo vaadata miks ei näita
+            lauaKaart1.pööraÜmber(laual.get(laual.size() - 5).toString());
+            lauaKaart2.pööraÜmber(laual.get(laual.size() - 4).toString());
+            lauaKaart3.pööraÜmber(laual.get(laual.size() - 3).toString());
+
+
+                scene.setOnMousePressed(event2 -> {
+                    System.out.println(event2.getX() + " " + event2.getY());
+                    // todo siit edasi lähevad juhised.
+
+                });
+
             });
 
             juhised.setOnMousePressed(event -> {
                 System.out.println("Juhised");
-                // siit edasi lähevad juhised.
+                // todo siit edasi lähevad juhised.
 
             });
 
