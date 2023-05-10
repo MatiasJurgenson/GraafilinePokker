@@ -31,7 +31,29 @@ public class KaardiKujutis extends Rectangle {
     }
 
     public void pööraÜmber(String mastJaTugevus) {
-        this.tekst.setText(mastJaTugevus);
+
+        //tugevuse muutmine standartseks
+        String mast = mastJaTugevus.substring(0, mastJaTugevus.length() - 2);
+        Character tugevus = mastJaTugevus.charAt(mastJaTugevus.length() - 1);
+        if (tugevus == 'P') {
+            tugevus = 'J';
+        } else if (tugevus == 'Ä') {
+            tugevus = 'A';
+        } else if (tugevus == 'E') {
+            tugevus = 'Q';
+        }
+
+        // if laused masti märkimiseks
+        if (mast.equals("RUUTU")) {
+            this.tekst.setText("♦ " + tugevus);
+        } else if (mast.equals("POTI")) {
+            this.tekst.setText("♠ " + tugevus);
+        } else if (mast.equals("RISTI")) {
+            this.tekst.setText("♣ " + tugevus);
+        } else {
+            this.tekst.setText("♥ " + tugevus);
+        }
+
         this.kaardiSisemus.setFill(Color.BLANCHEDALMOND);
         this.kaardiTaust.setFill(Color.DARKRED);
         this.tekst.setLayoutX(this.kaardiSisemus.getLayoutX()+8);

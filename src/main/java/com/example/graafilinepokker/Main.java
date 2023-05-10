@@ -78,8 +78,8 @@ public class Main extends Application {
         pealava.show();
         pealava.setResizable(false);
 
-        scene.setOnMousePressed(event -> {
-            if (event.getX() >= 350 && event.getY() > 175 && event.getX() <= 650 && event.getY() <= 250) {
+        //kui vajutadakse nuppu siis toimub vahetus (kordinaatidega tehes tulevad buggid, nt: lauale vajutades sai mängust lahkuda)
+        alusta.setOnMousePressed(event -> {
                 // siit edasi läheb mänguekraan ja loogika
                 root.getChildren().removeAll(pealkiri,backRuut,backRuut2,backRuut3,alusta, quit, juhised);
                 Rectangle lauaRing = new Rectangle(600,300);
@@ -206,8 +206,8 @@ public class Main extends Application {
                 System.out.println(mängijaKaardid);
                 String[] esimene = mängijaKaardid.split(" ");
                 System.out.println(Arrays.toString(esimene));
-                kaart9.pööraÜmber(esimene[0].substring(0,1).toUpperCase()+" "+esimene[1].substring(0,1).toUpperCase());
-                kaart10.pööraÜmber(esimene[2].substring(0,1).toUpperCase()+" "+esimene[3].substring(0,1).toUpperCase());
+                kaart9.pööraÜmber(esimene[0].toUpperCase()+" "+esimene[1].substring(0,1).toUpperCase());
+                kaart10.pööraÜmber(esimene[2].toUpperCase()+" "+esimene[3].substring(0,1).toUpperCase());
 
                 //lisan kõigi rahad.
                 List<Integer> mängijateRahad = diiler.getRaha();
@@ -223,14 +223,17 @@ public class Main extends Application {
                 //4. arvuti raha
                 arvutiRaha4.setRaha(mängijateRahad.get(4));
 
-            } else if (event.getX() >= 350 && event.getY() > 270 && event.getX() <= 650 && event.getY() <= 345) {
+            });
+
+            juhised.setOnMousePressed(event -> {
                 System.out.println("Juhised");
                 // siit edasi lähevad juhised.
 
-            } else if (event.getX() >= 350 && event.getY() > 365 && event.getX() <= 650 && event.getY() <= 440) {
+            });
+
+            quit.setOnMousePressed(event -> {
                 Platform.exit();
-            }
-        });
+            });
 
 
         /*
