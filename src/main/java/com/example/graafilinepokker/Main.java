@@ -25,6 +25,22 @@ public class Main extends Application {
     boolean folditud = false;
     int bettitud = 0;
     boolean betSisestatud = false;
+    int mituRaundiOnJäänud = 3;
+    public int blind = 1;
+    public Kaardipakk kaardipakk = new Kaardipakk();
+    public Diiler diiler = new Diiler(kaardipakk);
+    List<Integer> mängijateRahad = diiler.getRaha();
+    RahaKast mängijaRaha = new RahaKast();
+    RahaKast arvutiRaha2 = new RahaKast();
+    RahaKast arvutiRaha1 = new RahaKast();
+    RahaKast arvutiRaha3 = new RahaKast();
+    RahaKast arvutiRaha4 = new RahaKast();
+    RahaKast paljuMängusOn = new RahaKast();
+    public List<RahaKast> rahaKastid = new ArrayList<>();
+
+    public int viimaneBet = 200;
+
+    Random random = new Random();
 
     //vajalikud asjad (moodle järgi)
     //
@@ -32,11 +48,25 @@ public class Main extends Application {
     //todo Programm peab mingid andmed kirjutama faili ja neid failist ka lugema
     //todo Erinditöötluse abil tagada, et toimuks mõistlik reageerimine (vähemalt mõnedele) kasutaja ekslikele tegevustele
     //todo Programmi akna suurust muutes peab kuvatu mõistlikult muutuma.
-
+    public void panustaBlindid(int smallBlindMängija, int bigBlindMängija) {
+        System.out.println("Small blind: " + blind + ". mängija, panus: 100");
+        diiler.panustaRaha(blind,100);
+        rahaKastid.get(blind-1).paljuRahaOn.setText(String.valueOf(diiler.getMängijaRaha(1)));
+        System.out.println("Big blind: " + (blind+1) + ".mängija, panus: 200");
+        diiler.panustaRaha(blind+1, 200);
+        rahaKastid.get(blind).setRaha(diiler.getMängijaRaha(blind));
+        paljuMängusOn.setRaha(diiler.getLaualRaha());
+    }
 
 
     @Override
     public void start(Stage pealava) {
+        rahaKastid.add(mängijaRaha);
+        rahaKastid.add(arvutiRaha1);
+        rahaKastid.add(arvutiRaha2);
+        rahaKastid.add(arvutiRaha3);
+        rahaKastid.add(arvutiRaha4);
+        rahaKastid.add(paljuMängusOn);
         Pane root = new Pane();
         Scene scene = new Scene(root);
 
@@ -138,25 +168,15 @@ public class Main extends Application {
                 KaardiKujutis kaart10 = new KaardiKujutis();
                 kaart10.setPaiknevus(505,450);
 
+                List<KaardiKujutis> kaardiKujutised = new ArrayList<>(List.of(new KaardiKujutis[]{kaart9, kaart10, kaart1, kaart2, kaart3, kaart4, kaart5, kaart6, kaart7, kaart8}));
 
                 //rahakastid
-
-                RahaKast mängijaRaha = new RahaKast();
                 mängijaRaha.setPaiknevus(435,350);
                 mängijaRaha.rahaRingTaust.setFill(Color.DARKCYAN);
-                RahaKast arvutiRaha1 = new RahaKast();
                 arvutiRaha1.setPaiknevus(235,65);
-
-                RahaKast arvutiRaha2 = new RahaKast();
                 arvutiRaha2.setPaiknevus(635,65);
-
-                RahaKast arvutiRaha3 = new RahaKast();
                 arvutiRaha3.setPaiknevus(235,455);
-
-                RahaKast arvutiRaha4 = new RahaKast();
                 arvutiRaha4.setPaiknevus(635,455);
-
-                RahaKast paljuMängusOn = new RahaKast();
                 paljuMängusOn.setPaiknevus(435,275);
                 paljuMängusOn.rahaRingTaust.setFill(Color.IVORY);
 
@@ -198,7 +218,7 @@ public class Main extends Application {
                 root.getChildren().addAll(lauaRing, lauaRing2, kaart1.kaardiTaust, kaart1.kaardiSisemus, kaart2.kaardiTaust, kaart2.kaardiSisemus,
                         kaart3.kaardiTaust, kaart3.kaardiSisemus, kaart4.kaardiTaust, kaart4.kaardiSisemus, kaart5.kaardiTaust, kaart5.kaardiSisemus,
                         kaart6.kaardiTaust, kaart6.kaardiSisemus, kaart7.kaardiTaust, kaart7.kaardiSisemus, kaart8.kaardiTaust, kaart8.kaardiSisemus,
-                        kaart9.kaardiTaust, kaart9.kaardiSisemus, kaart10.kaardiTaust, kaart10.kaardiSisemus, kaart9.tekst, kaart10.tekst,
+                        kaart9.kaardiTaust, kaart9.kaardiSisemus, kaart10.kaardiTaust, kaart10.kaardiSisemus, kaart9.tekst, kaart10.tekst, kaart8.tekst,
                         kaart7.tekst, kaart6.tekst, kaart5.tekst, kaart4.tekst, kaart3.tekst, kaart2.tekst, kaart1.tekst,
                         mängijaRaha.rahaRingKast, mängijaRaha.rahaRingTaust, mängijaRaha.rahaRingKesk, mängijaRaha.raha, mängijaRaha.paljuRahaOn,
                         arvutiRaha1.rahaRingKast, arvutiRaha1.rahaRingTaust, arvutiRaha1.rahaRingKesk, arvutiRaha1.raha, arvutiRaha1.paljuRahaOn,
@@ -208,9 +228,7 @@ public class Main extends Application {
                         paljuMängusOn.rahaRingKast, paljuMängusOn.rahaRingTaust, paljuMängusOn.rahaRingKesk, paljuMängusOn.raha, paljuMängusOn.paljuRahaOn,
                         callBack, call,foldBack, fold, betBack, bet);
 
-                Kaardipakk kaardipakk = new Kaardipakk();
                 kaardipakk.genereeriTavaPakk();
-                Diiler diiler = new Diiler(kaardipakk);
                 diiler.alustaRaundi(5);
 
                 //panen mängija kaardid ümberpööratud asendisse.
@@ -222,9 +240,9 @@ public class Main extends Application {
                 kaart9.pööraÜmber(esimene[0].toUpperCase()+" "+esimene[1].substring(0,1).toUpperCase());
                 kaart10.pööraÜmber(esimene[2].toUpperCase()+" "+esimene[3].substring(0,1).toUpperCase());
 
-                //lisan kõigi rahad.
-                List<Integer> mängijateRahad = diiler.getRaha();
+                //lisan kõigi raha
                 System.out.println(mängijateRahad);
+
                 //mängijaraha
                 mängijaRaha.setRaha(mängijateRahad.get(0));
                 //1. arvuti raha
@@ -235,12 +253,107 @@ public class Main extends Application {
                 arvutiRaha3.setRaha(mängijateRahad.get(3));
                 //4. arvuti raha
                 arvutiRaha4.setRaha(mängijateRahad.get(4));
+
+                //panustan blindid
+                panustaBlindid(1,2);
                 
 
                 //while true
                 //todo kui fold siis viib mängu lõpuni
+            //spikker
+            //KaardiKujutised listis on mängija index 8-9;
+            //Rahakastis on mängija index 0;
+            //mängijateRahad on mängija index 0;
+            //diiler.mängus on mängioja index 0;
+
             fold.setOnMousePressed(eventFold -> {
                 folditud = true;
+                diiler.fold(1);
+                //teeb nii mitu raundi mitu jäänud on
+                while (mituRaundiOnJäänud != 0 && diiler.kasMängusOnKedagi()) {
+                    //igale mängijale valib tegevuse ja teostab selle.
+                    for (int i = 0; i < diiler.mängus.length; i++) {
+                        int mituMängus = 0;
+                        for (int k = 0; k < diiler.mängus.length; k++) {
+                            if (diiler.mängus[k]) mituMängus += 1;
+                        }
+                        //kui antud mängija on mängus veel.
+                        if (diiler.mängus[i]) {
+                            int foldCallRaise = random.nextInt(3);
+                            if (foldCallRaise == 0 && mituMängus == 1) {
+                                foldCallRaise = 1;
+                            }
+                            //kui fold
+                            if (foldCallRaise == 0) {
+                                diiler.fold(i+1);
+                            } else if (foldCallRaise == 1) {
+                                //kui on Call.
+                                if (viimaneBet > diiler.getMängijaRaha(i+1)) {
+                                    diiler.panustaRaha(i+1, diiler.getMängijaRaha(i+1));
+                                    continue;
+                                }
+                                diiler.panustaRaha(i+1,viimaneBet);
+                            } else if (foldCallRaise == 2) {
+                                int panus = random.nextInt((200+viimaneBet - 200) + 1) + 200;
+                                while (panus > diiler.getMängijaRaha(i+1)) {
+                                    panus = random.nextInt((200+viimaneBet - 200) + 1) + 200;
+                                }
+                                diiler.panustaRaha(i+1, panus);
+                                viimaneBet = panus;
+                            }
+                        }
+                    }
+                    mituRaundiOnJäänud -= 1;
+                }
+
+                List<Boolean> kesVõitis = kontrollija(diiler);
+                for (int i = 0; i < kesVõitis.size(); i++) {
+                    if (kesVõitis.get(i)) {
+                        diiler.lisaMängijaleVõidud(i);
+                    }
+                }
+
+                diiler.lisaLauale(5);
+                KaardiKujutis lauaKaart1 = new KaardiKujutis();
+                lauaKaart1.setPaiknevus(295,166);
+                KaardiKujutis lauaKaart2 = new KaardiKujutis();
+                lauaKaart2.setPaiknevus(380,166);
+                KaardiKujutis lauaKaart3 = new KaardiKujutis();
+                lauaKaart3.setPaiknevus(465,166);
+                KaardiKujutis lauaKaart4 = new KaardiKujutis();
+                lauaKaart4.setPaiknevus(550,166);
+                KaardiKujutis lauaKaart5 = new KaardiKujutis();
+                lauaKaart5.setPaiknevus(635,166);
+
+                root.getChildren().addAll(lauaKaart1.kaardiTaust,lauaKaart1.kaardiSisemus,lauaKaart2.kaardiTaust,lauaKaart2.kaardiSisemus,
+                        lauaKaart3.kaardiTaust,lauaKaart3.kaardiSisemus,lauaKaart4.kaardiTaust,lauaKaart4.kaardiSisemus, lauaKaart5.kaardiTaust,
+                        lauaKaart5.kaardiSisemus,lauaKaart1.tekst,lauaKaart2.tekst,lauaKaart3.tekst,lauaKaart4.tekst,lauaKaart5.tekst);
+
+                List<Kaart> laual = diiler.getLaual();
+                String[] esimeneLaual = laual.get(laual.size() - 5).toString().split(" ");
+                lauaKaart1.pööraÜmber(esimeneLaual[0].toUpperCase()+" "+esimeneLaual[1].substring(0,1).toUpperCase());
+                String[] teineLaual = laual.get(laual.size() - 4).toString().split(" ");
+                lauaKaart2.pööraÜmber(teineLaual[0].toUpperCase()+" "+teineLaual[1].substring(0,1).toUpperCase());
+                String[] kolmasLaual = laual.get(laual.size() - 3).toString().split(" ");
+                lauaKaart3.pööraÜmber(kolmasLaual[0].toUpperCase()+" "+kolmasLaual[1].substring(0,1).toUpperCase());
+                String[] neljasLaual = laual.get(laual.size() - 2).toString().split(" ");
+                lauaKaart4.pööraÜmber(neljasLaual[0].toUpperCase()+" "+neljasLaual[1].substring(0,1).toUpperCase());
+                String[] viiesLaual = laual.get(laual.size() - 1).toString().split(" ");
+                lauaKaart5.pööraÜmber(viiesLaual[0].toUpperCase()+" "+viiesLaual[1].substring(0,1).toUpperCase());
+
+                for (int i = 0; i < diiler.kätes.size(); i++) {
+                    // kaart9, kaart10, kaart1, kaart2, kaart3, kaart4, kaart5, kaart6, kaart7, kaart8
+                    List<Kaart> töödeldavadKaardid = new ArrayList<>(List.of(diiler.kätes.get(i)));
+                    String[] esimeneKaart = töödeldavadKaardid.get(0).toString().split(" ");
+                    String[] teineKaart = töödeldavadKaardid.get(1).toString().split(" ");
+                    kaardiKujutised.get(i*2).pööraÜmber(esimeneKaart[0].substring(0,1).toUpperCase() + " " + esimeneKaart[1].substring(0,1).toUpperCase());
+                    kaardiKujutised.get(i*2+1).pööraÜmber(teineKaart[0].substring(0,1).toUpperCase() + " " + teineKaart[1].substring(0,1).toUpperCase());
+                }
+
+                for (int i = 1; i < rahaKastid.size()-1; i++) {
+                    rahaKastid.get(i).setRaha(mängijateRahad.get(i));
+                }
+                paljuMängusOn.setRaha(diiler.getLaualRaha());
             });
 
                 //todo call kui mingi npc otsusutab panust suurendada
@@ -255,6 +368,7 @@ public class Main extends Application {
                 TextField bettiSisestus = new TextField();
                 bettiSisestus.setLayoutX(430);
                 bettiSisestus.setLayoutY(320);
+                bettiSisestus.setBorder(Border.stroke(Color.RED));
 
                 Text tekst = new Text("sisestage panuse suurus");
                 tekst.setFont(new Font("Comic Sans MS",30));
@@ -293,7 +407,7 @@ public class Main extends Application {
 
 
                 if (bettitud == 0) {
-
+                    mituRaundiOnJäänud -= 1;
                     //peale esimest bettimist
                     diiler.lisaLauale(5);
 
@@ -318,6 +432,7 @@ public class Main extends Application {
 
                     //esimese 3 kaardi ümberpööramine
                     String[] esimeneLaual = laual.get(laual.size() - 5).toString().split(" ");
+                    System.out.println(Arrays.toString(esimeneLaual));
                     lauaKaart1.pööraÜmber(esimeneLaual[0].toUpperCase()+" "+esimeneLaual[1].substring(0,1).toUpperCase());
                     String[] teineLaual = laual.get(laual.size() - 4).toString().split(" ");
                     lauaKaart2.pööraÜmber(teineLaual[0].toUpperCase()+" "+teineLaual[1].substring(0,1).toUpperCase());
@@ -630,52 +745,61 @@ public class Main extends Application {
             System.out.println("Võidu põhjus: ");
         }
     }
-    public static void kontrollija(Diiler diiler) {
+    public static List<Boolean> kontrollija(Diiler diiler) {
+        List<Boolean> võitjad;
         if (diiler.royalStraightFlush().contains(true)) {
-            List<Boolean> võitjad = diiler.royalStraightFlush();
+            võitjad = diiler.royalStraightFlush();
             väljastaVõitja(võitjad);
             System.out.println("Kuninglik mastirida");
+            return võitjad;
 
         } else if (diiler.straightFlush().contains(true)) {
-            List<Boolean> võitjad = diiler.straightFlush();
+            võitjad = diiler.straightFlush();
             väljastaVõitja(võitjad);
             System.out.println("Mastirida");
+            return võitjad;
 
         } else if (diiler.fourOfAKind().contains(true)) {
-            List<Boolean> võitjad = diiler.fourOfAKind();
+            võitjad = diiler.fourOfAKind();
             väljastaVõitja(võitjad);
             System.out.println("Nelik");
+            return võitjad;
 
         } else if (diiler.fullHouse().contains(true)) {
-            List<Boolean> võitjad = diiler.fullHouse();
+            võitjad = diiler.fullHouse();
             väljastaVõitja(võitjad);
             System.out.println("Maja");
+            return võitjad;
 
         } else if (diiler.flush().contains(true)) {
-            List<Boolean> võitjad = diiler.flush();
+            võitjad = diiler.flush();
             väljastaVõitja(võitjad);
             System.out.println("Mast");
+            return võitjad;
 
         } else if (diiler.straight().contains(true)) {
-            List<Boolean> võitjad = diiler.straight();
+            võitjad = diiler.straight();
             väljastaVõitja(võitjad);
             System.out.println("Rida");
+            return võitjad;
 
         } else if (diiler.threeOfAKind().contains(true)) {
-            List<Boolean> võitjad = diiler.threeOfAKind();
+            võitjad = diiler.threeOfAKind();
             väljastaVõitja(võitjad);
             System.out.println("Kolmik");
-
+            return võitjad;
         } else if (diiler.twoPair().contains(true)) {
-            List<Boolean> võitjad = diiler.twoPair();
+            võitjad = diiler.twoPair();
             väljastaVõitja(võitjad);
             System.out.println("Kaks paar");
-
+            return võitjad;
         } else if (diiler.pair().contains(true)) {
-            List<Boolean> võitjad = diiler.pair();
+            võitjad = diiler.pair();
             väljastaVõitja(võitjad);
             System.out.println("üks paar");
+            return võitjad;
         }
+        return null;
     }
 
     public static void main(String[] args) {

@@ -49,6 +49,10 @@ public class RahaKast extends Shape {
     public void setRaha(int arv) {
         int pikkus = (String.valueOf(arv)).length();
         if (pikkus > 5) return;
+        if (arv < 0) {
+            this.paljuRahaOn.setText("00000");
+            return;
+        }
         this.paljuRahaOn.setText("0".repeat(5-pikkus)+arv);
     }
 }

@@ -9,7 +9,7 @@ public class Diiler {
     public List<Kaart> laual = new ArrayList<>();
     public int laualRaha;
 
-    private boolean[] mängus;
+    public boolean[] mängus;
 
     Diiler(Kaardipakk kaardipakk) {
         this.kaardipakk = kaardipakk;
@@ -76,8 +76,23 @@ public class Diiler {
         return this.laual;
     }
 
+    public int getMängijaRaha(int mängija) {
+        return this.raha.get(mängija-1);
+    }
+
+    public void lisaMängijaleVõidud(int mängija) {
+        this.raha.set(mängija-1, this.raha.get(mängija-1)+this.laualRaha);
+        this.laualRaha = 0;
+    }
+
     public String getMängijaKäsi() {
         return this.kätes.get(0)[0] +" "+ this.kätes.get(0)[1];
+    }
+    public boolean kasMängusOnKedagi() {
+        for (int i = 0; i < this.mängus.length; i++) {
+            if (this.mängus[i]) return true;
+        }
+        return false;
     }
 
     public List<Integer> getRaha() {
