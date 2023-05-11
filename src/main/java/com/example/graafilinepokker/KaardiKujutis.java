@@ -6,7 +6,7 @@ import javafx.scene.shape.Rectangle;
 import javafx.scene.text.Font;
 
 public class KaardiKujutis extends Rectangle {
-
+    public boolean kasOnPööratud = false;
     public Rectangle kaardiTaust;
     public Rectangle kaardiSisemus;
     public Label tekst;
@@ -31,7 +31,9 @@ public class KaardiKujutis extends Rectangle {
     }
 
     public void pööraÜmber(String mastJaTugevus) {
-
+        if (this.kasOnPööratud) {
+            return;
+        }
         //tugevuse muutmine standartseks
         String mast = mastJaTugevus.substring(0, mastJaTugevus.length() - 2);
         Character tugevus = mastJaTugevus.charAt(mastJaTugevus.length() - 1);
@@ -46,12 +48,16 @@ public class KaardiKujutis extends Rectangle {
         // if laused masti märkimiseks
         if (mast.equals("RUUTU")) {
             this.tekst.setText("♦ " + tugevus);
+            this.kasOnPööratud = true;
         } else if (mast.equals("POTI")) {
             this.tekst.setText("♠ " + tugevus);
+            this.kasOnPööratud = true;
         } else if (mast.equals("RISTI")) {
             this.tekst.setText("♣ " + tugevus);
+            this.kasOnPööratud = true;
         } else {
             this.tekst.setText("♥ " + tugevus);
+            this.kasOnPööratud = true;
         }
 
         this.kaardiSisemus.setFill(Color.BLANCHEDALMOND);

@@ -258,7 +258,6 @@ public class Main extends Application {
                 
 
                 //while true
-                //todo kui fold siis viib mängu lõpuni
             //spikker
             //KaardiKujutised listis on mängija index 8-9;
             //Rahakastis on mängija index 0;
@@ -321,8 +320,7 @@ public class Main extends Application {
                     }
                     kasMängOnLäbi = true;
                 }
-
-                diiler.lisaLauale(5);
+                diiler.lisaLauale(5-diiler.getLaual().size());
                 KaardiKujutis lauaKaart1 = new KaardiKujutis();
                 lauaKaart1.setPaiknevus(295,166);
                 KaardiKujutis lauaKaart2 = new KaardiKujutis();
@@ -373,6 +371,12 @@ public class Main extends Application {
                     return;
                 }
                 //bettimise sisetamine
+                Label viimaneBetLabel = new Label("Viimane bet: " + viimaneBet);
+                viimaneBetLabel.setFont(new Font("Comic Sans MS",30));
+                viimaneBetLabel.setLayoutY(230);
+                viimaneBetLabel.setLayoutX(380);
+                viimaneBetLabel.setTextFill(Color.WHITE);
+
                 Rectangle panustusAken = new Rectangle(250, 150, 500, 300);
                 panustusAken.setFill(Color.DARKGREEN);
                 panustusAken.setArcHeight(100);
@@ -402,7 +406,7 @@ public class Main extends Application {
                 panustaBack.setArcWidth(50);
                 panustaBack.setArcHeight(50);
 
-                root.getChildren().addAll(panustusAken, bettiSisestus, tekst, panustaBack, panusta);
+                root.getChildren().addAll(panustusAken, bettiSisestus, tekst, panustaBack, panusta, viimaneBetLabel);
 
 
 
@@ -410,12 +414,11 @@ public class Main extends Application {
 
 
                 panusta.setOnMousePressed(eventPanusta -> {
-                    if (Integer.parseInt(bettiSisestus.getText()) > diiler.getMängijaRaha(1)) {
-
+                    if (Integer.parseInt(bettiSisestus.getText()) > diiler.getMängijaRaha(1) || Integer.parseInt(bettiSisestus.getText()) < viimaneBet) {
                     } else {
                     diiler.panustaRaha(1, Integer.parseInt(bettiSisestus.getText()));
 
-                    root.getChildren().removeAll(panustusAken, bettiSisestus, tekst, panusta);
+                    root.getChildren().removeAll(panustusAken, bettiSisestus, tekst, panusta, panustaBack, viimaneBetLabel);
                     paljuMängusOn.setRaha(diiler.getLaualRaha());
                     mängijaRaha.setRaha(diiler.getMängijaRaha(1) - Integer.parseInt(bettiSisestus.getText()));
 

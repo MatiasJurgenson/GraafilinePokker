@@ -17,8 +17,8 @@
       <change beforePath="$PROJECT_DIR$/build/libs/GraafilinePokker-1.0-SNAPSHOT.jar" beforeDir="false" afterPath="$PROJECT_DIR$/build/libs/GraafilinePokker-1.0-SNAPSHOT.jar" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/build/tmp/compileJava/compileTransaction/stash-dir/Main.class.uniqueId0" beforeDir="false" afterPath="$PROJECT_DIR$/build/tmp/compileJava/compileTransaction/stash-dir/Main.class.uniqueId0" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/build/tmp/compileJava/previous-compilation-data.bin" beforeDir="false" afterPath="$PROJECT_DIR$/build/tmp/compileJava/previous-compilation-data.bin" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/com/example/graafilinepokker/KaardiKujutis.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/com/example/graafilinepokker/KaardiKujutis.java" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/src/main/java/com/example/graafilinepokker/Main.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/com/example/graafilinepokker/Main.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/module-info.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/module-info.java" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
