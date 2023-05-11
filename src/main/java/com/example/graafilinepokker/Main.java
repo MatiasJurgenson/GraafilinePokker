@@ -2,6 +2,8 @@ package com.example.graafilinepokker;
 
 import javafx.application.Application;
 import javafx.application.Platform;
+import javafx.event.ActionEvent;
+import javafx.event.EventHandler;
 import javafx.geometry.Insets;
 import javafx.geometry.Pos;
 import javafx.scene.Group;
@@ -19,12 +21,12 @@ import javafx.scene.text.Text;
 import javafx.stage.Stage;
 
 import java.util.*;
+import java.util.concurrent.CountDownLatch;
 
 public class Main extends Application {
 
     boolean folditud = false;
     int bettitud = 0;
-    boolean betSisestatud = false;
     int mituRaundiOnJäänud = 3;
     public int blind = 1;
     public Kaardipakk kaardipakk = new Kaardipakk();
@@ -392,56 +394,54 @@ public class Main extends Application {
 
 
                 //todo leida viis asutaja käsu ootamiseks
-                /*while (true) {
-                    panusta.setOnMousePressed(eventBetting -> {
-                        diiler.panustaRaha(1, Integer.parseInt(bettiSisestus.getText()));
-                        betSisestatud = true;
-                    });
-                    if (betSisestatud) {
-                        betSisestatud = false;
-                        break;
+
+
+                panusta.setOnMousePressed(eventPanusta -> {
+                    diiler.panustaRaha(1, Integer.parseInt(bettiSisestus.getText()));
+
+                    root.getChildren().removeAll(panustusAken, bettiSisestus, tekst, panusta);
+                    paljuMängusOn.setRaha(diiler.getLaualRaha());
+                    mängijaRaha.setRaha(diiler.getMängijaRaha(1) - Integer.parseInt(bettiSisestus.getText()));
+
+                    if (bettitud == 0) {
+                        mituRaundiOnJäänud -= 1;
+                        //peale esimest bettimist
+                        diiler.lisaLauale(5);
+
+                        //laua kaardid
+                        KaardiKujutis lauaKaart1 = new KaardiKujutis();
+                        lauaKaart1.setPaiknevus(295,166);
+                        KaardiKujutis lauaKaart2 = new KaardiKujutis();
+                        lauaKaart2.setPaiknevus(380,166);
+                        KaardiKujutis lauaKaart3 = new KaardiKujutis();
+                        lauaKaart3.setPaiknevus(465,166);
+                        KaardiKujutis lauaKaart4 = new KaardiKujutis();
+                        lauaKaart4.setPaiknevus(550,166);
+                        KaardiKujutis lauaKaart5 = new KaardiKujutis();
+                        lauaKaart5.setPaiknevus(635,166);
+
+                        root.getChildren().addAll(lauaKaart1.kaardiTaust,lauaKaart1.kaardiSisemus,lauaKaart2.kaardiTaust,lauaKaart2.kaardiSisemus,
+                                lauaKaart3.kaardiTaust,lauaKaart3.kaardiSisemus,lauaKaart4.kaardiTaust,lauaKaart4.kaardiSisemus, lauaKaart5.kaardiTaust,
+                                lauaKaart5.kaardiSisemus,lauaKaart1.tekst,lauaKaart2.tekst,lauaKaart3.tekst,lauaKaart4.tekst,lauaKaart5.tekst);
+
+                        List<Kaart> laual = diiler.getLaual();
+
+
+                        //esimese 3 kaardi ümberpööramine
+                        String[] esimeneLaual = laual.get(laual.size() - 5).toString().split(" ");
+                        System.out.println(Arrays.toString(esimeneLaual));
+                        lauaKaart1.pööraÜmber(esimeneLaual[0].toUpperCase()+" "+esimeneLaual[1].substring(0,1).toUpperCase());
+                        String[] teineLaual = laual.get(laual.size() - 4).toString().split(" ");
+                        lauaKaart2.pööraÜmber(teineLaual[0].toUpperCase()+" "+teineLaual[1].substring(0,1).toUpperCase());
+                        String[] kolmasLaual = laual.get(laual.size() - 3).toString().split(" ");
+                        lauaKaart3.pööraÜmber(kolmasLaual[0].toUpperCase()+" "+kolmasLaual[1].substring(0,1).toUpperCase());
+
+                        bettitud++;
+
                     }
-                }*/
 
-                root.getChildren().removeAll(panustusAken, bettiSisestus, tekst, panusta);
+                });
 
-
-                if (bettitud == 0) {
-                    mituRaundiOnJäänud -= 1;
-                    //peale esimest bettimist
-                    diiler.lisaLauale(5);
-
-                    //laua kaardid
-                    KaardiKujutis lauaKaart1 = new KaardiKujutis();
-                    lauaKaart1.setPaiknevus(295,166);
-                    KaardiKujutis lauaKaart2 = new KaardiKujutis();
-                    lauaKaart2.setPaiknevus(380,166);
-                    KaardiKujutis lauaKaart3 = new KaardiKujutis();
-                    lauaKaart3.setPaiknevus(465,166);
-                    KaardiKujutis lauaKaart4 = new KaardiKujutis();
-                    lauaKaart4.setPaiknevus(550,166);
-                    KaardiKujutis lauaKaart5 = new KaardiKujutis();
-                    lauaKaart5.setPaiknevus(635,166);
-
-                    root.getChildren().addAll(lauaKaart1.kaardiTaust,lauaKaart1.kaardiSisemus,lauaKaart2.kaardiTaust,lauaKaart2.kaardiSisemus,
-                            lauaKaart3.kaardiTaust,lauaKaart3.kaardiSisemus,lauaKaart4.kaardiTaust,lauaKaart4.kaardiSisemus, lauaKaart5.kaardiTaust,
-                            lauaKaart5.kaardiSisemus,lauaKaart1.tekst,lauaKaart2.tekst,lauaKaart3.tekst,lauaKaart4.tekst,lauaKaart5.tekst);
-
-                    List<Kaart> laual = diiler.getLaual();
-
-
-                    //esimese 3 kaardi ümberpööramine
-                    String[] esimeneLaual = laual.get(laual.size() - 5).toString().split(" ");
-                    System.out.println(Arrays.toString(esimeneLaual));
-                    lauaKaart1.pööraÜmber(esimeneLaual[0].toUpperCase()+" "+esimeneLaual[1].substring(0,1).toUpperCase());
-                    String[] teineLaual = laual.get(laual.size() - 4).toString().split(" ");
-                    lauaKaart2.pööraÜmber(teineLaual[0].toUpperCase()+" "+teineLaual[1].substring(0,1).toUpperCase());
-                    String[] kolmasLaual = laual.get(laual.size() - 3).toString().split(" ");
-                    lauaKaart3.pööraÜmber(kolmasLaual[0].toUpperCase()+" "+kolmasLaual[1].substring(0,1).toUpperCase());
-
-                    bettitud++;
-
-                }
             });
         });
 

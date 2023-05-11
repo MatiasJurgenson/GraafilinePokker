@@ -17,9 +17,7 @@
       <change beforePath="$PROJECT_DIR$/build/libs/GraafilinePokker-1.0-SNAPSHOT.jar" beforeDir="false" afterPath="$PROJECT_DIR$/build/libs/GraafilinePokker-1.0-SNAPSHOT.jar" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/build/tmp/compileJava/compileTransaction/stash-dir/Main.class.uniqueId0" beforeDir="false" afterPath="$PROJECT_DIR$/build/tmp/compileJava/compileTransaction/stash-dir/Main.class.uniqueId0" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/build/tmp/compileJava/previous-compilation-data.bin" beforeDir="false" afterPath="$PROJECT_DIR$/build/tmp/compileJava/previous-compilation-data.bin" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/com/example/graafilinepokker/Diiler.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/com/example/graafilinepokker/Diiler.java" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/src/main/java/com/example/graafilinepokker/Main.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/com/example/graafilinepokker/Main.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/com/example/graafilinepokker/RahaKast.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/com/example/graafilinepokker/RahaKast.java" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -97,25 +95,11 @@
       <option name="presentableId" value="Default" />
       <updated>1683645510242</updated>
       <workItem from="1683723141317" duration="4861000" />
+      <workItem from="1683796301508" duration="2269000" />
     </task>
     <servers />
   </component>
   <component name="TypeScriptGeneratedFilesManager">
     <option name="version" value="3" />
-  </component>
-  <component name="XDebuggerManager">
-    <breakpoint-manager>
-      <breakpoints>
-        <line-breakpoint enabled="true" type="java-method">
-          <url>file://$PROJECT_DIR$/src/main/java/com/example/graafilinepokker/Main.java</url>
-          <line>747</line>
-          <properties class="com.example.graafilinepokker.Main" method="kontrollija">
-            <option name="EMULATED" value="true" />
-            <option name="WATCH_EXIT" value="false" />
-          </properties>
-          <option name="timeStamp" value="2" />
-        </line-breakpoint>
-      </breakpoints>
-    </breakpoint-manager>
   </component>
 </project>
