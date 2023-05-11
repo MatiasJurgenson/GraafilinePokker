@@ -2,26 +2,18 @@ package com.example.graafilinepokker;
 
 import javafx.application.Application;
 import javafx.application.Platform;
-import javafx.event.ActionEvent;
-import javafx.event.EventHandler;
 import javafx.geometry.Insets;
-import javafx.geometry.Pos;
-import javafx.scene.Group;
 import javafx.scene.Scene;
-import javafx.scene.control.Button;
 import javafx.scene.control.Label;
 import javafx.scene.control.TextField;
 import javafx.scene.layout.*;
 import javafx.scene.paint.Color;
-import javafx.scene.shape.Circle;
-import javafx.scene.shape.Ellipse;
 import javafx.scene.shape.Rectangle;
 import javafx.scene.text.Font;
 import javafx.scene.text.Text;
 import javafx.stage.Stage;
 
 import java.util.*;
-import java.util.concurrent.CountDownLatch;
 
 public class Main extends Application {
 
@@ -39,6 +31,8 @@ public class Main extends Application {
     RahaKast arvutiRaha4 = new RahaKast();
     RahaKast paljuMängusOn = new RahaKast();
     public List<RahaKast> rahaKastid = new ArrayList<>();
+
+    boolean kasMängOnLäbi;
 
     public int viimaneBet = 200;
 
@@ -144,25 +138,25 @@ public class Main extends Application {
                 KaardiKujutis kaart1 = new KaardiKujutis();
                 kaart1.setPaiknevus(100,100);
                 KaardiKujutis kaart2 = new KaardiKujutis();
-                kaart2.setPaiknevus(120,75);
+                kaart2.setPaiknevus(15,100);
 
                 //teine mängija
                 KaardiKujutis kaart3 = new KaardiKujutis();
-                kaart3.setPaiknevus(820,100);
+                kaart3.setPaiknevus(815,100);
                 KaardiKujutis kaart4 = new KaardiKujutis();
-                kaart4.setPaiknevus(800,75);
+                kaart4.setPaiknevus(900,100);
 
                 //kolmas mängija
                 KaardiKujutis kaart5 = new KaardiKujutis();
-                kaart5.setPaiknevus(820,375);
+                kaart5.setPaiknevus(815,400);
                 KaardiKujutis kaart6 = new KaardiKujutis();
-                kaart6.setPaiknevus(800,400);
+                kaart6.setPaiknevus(900,400);
 
                 //neljas mängija
                 KaardiKujutis kaart7 = new KaardiKujutis();
-                kaart7.setPaiknevus(100,375);
+                kaart7.setPaiknevus(100,400);
                 KaardiKujutis kaart8 = new KaardiKujutis();
-                kaart8.setPaiknevus(120,400);
+                kaart8.setPaiknevus(15,400);
 
                 //inimese kaardid
                 KaardiKujutis kaart9 = new KaardiKujutis();
@@ -269,6 +263,10 @@ public class Main extends Application {
             //diiler.mängus on mängioja index 0;
 
             fold.setOnMousePressed(eventFold -> {
+                if (kasMängOnLäbi) {
+                    return;
+                }
+                int viimaneMängija = 0;
                 folditud = true;
                 diiler.fold(1);
                 //teeb nii mitu raundi mitu jäänud on
@@ -287,6 +285,7 @@ public class Main extends Application {
                             }
                             //kui fold
                             if (foldCallRaise == 0) {
+                                viimaneMängija = i;
                                 diiler.fold(i+1);
                             } else if (foldCallRaise == 1) {
                                 //kui on Call.
@@ -309,10 +308,15 @@ public class Main extends Application {
                 }
 
                 List<Boolean> kesVõitis = kontrollija(diiler);
+                if (kesVõitis == null) {
+                    diiler.mängus[viimaneMängija] = true;
+                    kesVõitis = kontrollija(diiler);
+                }
                 for (int i = 0; i < kesVõitis.size(); i++) {
                     if (kesVõitis.get(i)) {
                         diiler.lisaMängijaleVõidud(i);
                     }
+                    kasMängOnLäbi = true;
                 }
 
                 diiler.lisaLauale(5);
@@ -362,41 +366,50 @@ public class Main extends Application {
                 //todo bet suurendab betti
 
             bet.setOnMousePressed(eventFold -> {
-
+                if (kasMängOnLäbi) {
+                    return;
+                }
                 //bettimise sisetamine
                 Rectangle panustusAken = new Rectangle(250, 150, 500, 300);
-                panustusAken.setFill(Color.SNOW);
+                panustusAken.setFill(Color.DARKGREEN);
+                panustusAken.setArcHeight(100);
+                panustusAken.setArcWidth(100);
+                panustusAken.setStroke(Color.SNOW);
+                panustusAken.setStrokeWidth(10);
 
                 TextField bettiSisestus = new TextField();
                 bettiSisestus.setLayoutX(430);
                 bettiSisestus.setLayoutY(320);
-                bettiSisestus.setBorder(Border.stroke(Color.RED));
+                bettiSisestus.setBorder(Border.stroke(Color.WHITE));
 
                 Text tekst = new Text("sisestage panuse suurus");
                 tekst.setFont(new Font("Comic Sans MS",30));
-                tekst.setLayoutX(380);
-                tekst.setLayoutY(280);
+                tekst.setLayoutX(340);
+                tekst.setLayoutY(300);
+                tekst.setFill(Color.WHITESMOKE);
 
                 Label panusta = new Label("Bet");
                 panusta.setFont(new Font("Comic Sans MS",30));
                 Rectangle panustaBack = new Rectangle(100,50);
                 panustaBack.setFill(Color.BLANCHEDALMOND);
-                panusta.setLayoutX(450);
-                panusta.setLayoutY(400);
-                panustaBack.setLayoutX(425);
-                panustaBack.setLayoutY(397);
+                panusta.setLayoutX(475);
+                panusta.setLayoutY(363);
+                panustaBack.setLayoutX(450);
+                panustaBack.setLayoutY(360);
                 panustaBack.setArcWidth(50);
                 panustaBack.setArcHeight(50);
 
-                root.getChildren().addAll(panustusAken, bettiSisestus, tekst, panusta);
+                root.getChildren().addAll(panustusAken, bettiSisestus, tekst, panustaBack, panusta);
 
-                System.out.println("test");
 
 
                 //todo leida viis asutaja käsu ootamiseks
 
 
                 panusta.setOnMousePressed(eventPanusta -> {
+                    if (Integer.parseInt(bettiSisestus.getText()) > diiler.getMängijaRaha(1)) {
+
+                    } else {
                     diiler.panustaRaha(1, Integer.parseInt(bettiSisestus.getText()));
 
                     root.getChildren().removeAll(panustusAken, bettiSisestus, tekst, panusta);
@@ -438,6 +451,7 @@ public class Main extends Application {
 
                         bettitud++;
 
+                    }
                     }
 
                 });
@@ -798,8 +812,24 @@ public class Main extends Application {
             väljastaVõitja(võitjad);
             System.out.println("üks paar");
             return võitjad;
+        } else {
+            List<Integer> kaardid = diiler.highCard();
+            System.out.println(kaardid);
+            int suurim = 0;
+            int suurimIndeks = 0;
+            for (int i = 0; i < kaardid.size(); i++) {
+                if (kaardid.get(i) > suurim) {
+                    suurim = kaardid.get(i);
+                    suurimIndeks = i;
+                }
+            }
+            List<Boolean> temp = new ArrayList<>();
+            diiler.mängus[suurimIndeks] = true;
+            for (int i = 0; i < diiler.mängus.length; i++) {
+                temp.add(diiler.mängus[i]);
+            }
+            return temp;
         }
-        return null;
     }
 
     public static void main(String[] args) {
