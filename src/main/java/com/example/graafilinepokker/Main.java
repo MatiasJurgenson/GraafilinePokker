@@ -13,7 +13,10 @@ import javafx.scene.text.Font;
 import javafx.scene.text.Text;
 import javafx.stage.Stage;
 
+import java.awt.*;
+import java.net.URI;
 import java.util.*;
+import java.util.List;
 
 public class Main extends Application {
 
@@ -461,7 +464,95 @@ public class Main extends Application {
 
         juhised.setOnMousePressed(event -> {
             System.out.println("Juhised");
-            // todo siit edasi lähevad juhised.
+            root.getChildren().remove(0,root.getChildren().size());
+            Rectangle tagasiNupp = new Rectangle(100,50);
+            tagasiNupp.setArcHeight(50);
+            tagasiNupp.setArcWidth(50);
+            tagasiNupp.setLayoutX(450);
+            tagasiNupp.setLayoutY(470);
+            tagasiNupp.setFill(Color.WHITE);
+            tagasiNupp.setStroke(Color.BLACK);
+            tagasiNupp.setStrokeWidth(5);
+            Label tagasiNuppTekst = new Label("Tagasi");
+            tagasiNuppTekst.setFont(new Font("Comic Sans MS",25));
+            tagasiNuppTekst.setLayoutX(462);
+            tagasiNuppTekst.setLayoutY(475);
+
+            KaardiKujutis demoKaart = new KaardiKujutis();
+            demoKaart.setPaiknevus(20,20);
+            KaardiKujutis demoKaart2 = new KaardiKujutis();
+            demoKaart2.setPaiknevus(105, 20);
+            demoKaart2.pööraÜmber("Ä T");
+
+            Rectangle loetavuseKast = new Rectangle(750,400);
+            loetavuseKast.setFill(Color.WHITE);
+            loetavuseKast.setLayoutY(25);
+            loetavuseKast.setLayoutX(210);
+            loetavuseKast.setArcWidth(100);
+            loetavuseKast.setArcHeight(100);
+
+            Label kaartideTekst = new Label("Kaartidel tähistab esimene sümbol '♥' kaardi masti, teine sümbol 'T' tähistab\nkaardi tugevust." +
+                    "Et panust suurendada vajutada nupule BET, et panust hoida\nvajutada nupule CALL, et raundist välja jääda vajutada FOLD." +
+                    " Et lugeda\nkombinatsioonide kohta vajutada        (avab interneti akna.)");
+            Label hyperLink = new Label("siia.");
+            hyperLink.setLayoutY(119);
+            hyperLink.setLayoutX(535);
+            hyperLink.setFont(new Font("Comic Sans MS", 20));
+            kaartideTekst.setFont(new Font("Comic Sans MS", 20));
+            kaartideTekst.setLayoutX(225);
+            kaartideTekst.setLayoutY(35);
+
+            hyperLink.setOnMousePressed(event3 -> {
+                try {
+                    Desktop desktop = java.awt.Desktop.getDesktop();
+                    URI oURL = new URI("https://et.wikipedia.org/wiki/Pokkerik%C3%A4te_tugevusj%C3%A4rjestus");
+                    desktop.browse(oURL);
+                } catch (Exception e) {
+                    e.printStackTrace();
+                }
+            });
+
+            Label callDemo = new Label("Call");
+            callDemo.setFont(new Font("Comic Sans MS",30));
+            Rectangle callBackDemo = new Rectangle(100,50);
+            callBackDemo.setFill(Color.BLANCHEDALMOND);
+            callDemo.setLayoutX(73);
+            callDemo.setLayoutY(142);
+            callBackDemo.setLayoutX(50);
+            callBackDemo.setLayoutY(140);
+            callBackDemo.setArcWidth(50);
+            callBackDemo.setArcHeight(50);
+
+            Label betDemo = new Label("Bet");
+            betDemo.setFont(new Font("Comic Sans MS",30));
+            Rectangle betBackDemo = new Rectangle(100,50);
+            betBackDemo.setFill(Color.BLANCHEDALMOND);
+            betDemo.setLayoutX(73);
+            betDemo.setLayoutY(202);
+            betBackDemo.setLayoutX(50);
+            betBackDemo.setLayoutY(200);
+            betBackDemo.setArcWidth(50);
+            betBackDemo.setArcHeight(50);
+
+            Label foldDemo = new Label("Fold");
+            foldDemo.setFont(new Font("Comic Sans MS",30));
+            Rectangle foldBackDemo = new Rectangle(100,50);
+            foldBackDemo.setFill(Color.BLANCHEDALMOND);
+            foldDemo.setLayoutX(70);
+            foldDemo.setLayoutY(262);
+            foldBackDemo.setLayoutX(50);
+            foldBackDemo.setLayoutY(260);
+            foldBackDemo.setArcWidth(50);
+            foldBackDemo.setArcHeight(50);
+
+            root.getChildren().addAll(loetavuseKast, tagasiNupp, tagasiNuppTekst, demoKaart2.kaardiTaust, demoKaart2.kaardiSisemus, demoKaart2.tekst,
+                    demoKaart.kaardiTaust, demoKaart.kaardiSisemus, demoKaart.tekst, kaartideTekst, foldBackDemo, foldDemo, callBackDemo, callDemo, betBackDemo, betDemo,
+                    hyperLink);
+
+            tagasiNuppTekst.setOnMousePressed(event2 -> {
+                root.getChildren().remove(0,root.getChildren().size());
+                root.getChildren().addAll(pealkiri,backRuut,backRuut2,backRuut3,alusta, quit, juhised);
+            });
 
         });
 
